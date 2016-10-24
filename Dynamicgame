@@ -1,0 +1,61 @@
+import random
+
+consumerRatio = .2 
+periods = 3
+deter = 10
+people = 10000
+consumerlist = []
+Ratiolist = [consumerRatio]
+
+class Consumer(object):
+	"""Initialize Consumers"""
+	def __init__(self, fixed, social,pirate):
+		self.social = social
+		self.fixed = fixed
+		self.pirate = pirate
+	def decide(self,consumerRatio,deter):
+		print('one')
+		if self.social*consumerRatio + self.fixed > deter: 
+			print('two')
+			if self.pirate == False:
+				print('Has changed from False to True')
+				pass
+			self.pirate = True
+		else:
+			print('three')
+			if self.pirate == True:
+				print('Has changed from True to False')
+				pass
+			self.pirate = False
+
+"""Establish prportion of people who are consuming"""
+def countpirates(list):
+	truths = sum(1 for x in range(0,len(list)) if list[x].pirate == True)
+	return truths
+
+"""Create an array of initialized consumers and add them to list"""
+for x in range(0,people):
+	fixed = random.uniform(0,10)
+	social = random.uniform(0,20)
+	pirate = (social * 0.6 + fixed) > 5 # boolean
+	"Adds each consumer to the consumerlist"
+	consumerlist.append(consumer(fixed,social,pirate))
+
+"""Print the consumers attributes"""
+for i in range(0,len(consumerlist)):
+	print(i)
+	print(consumerlist[i].social)
+	print(consumerlist[i].fixed)
+	print(consumerlist[i].pirate)
+
+consumerRatio = countpirates(consumerlist)/people
+
+for i in range(0,periods):
+	for x in range(0,len(consumerlist)):
+		print(consumerlist[x])
+		consumerlist[x].decide(consumerRatio,deter)
+	consumerRatio = countpirates(consumerlist)/people
+	Ratiolist.append(consumerRatio)
+
+print(Ratiolist)
+print(countpirates(consumerlist))
